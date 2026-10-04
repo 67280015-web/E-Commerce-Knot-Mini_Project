@@ -1,11 +1,29 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { Package, Heart, MapPin, User, LogOut, ChevronRight, FileText, CheckCircle2, Clock } from 'lucide-react';
+import { useSession, signOut } from 'next-auth/react';
 
 export default function AccountPage() {
   const [activeTab, setActiveTab] = useState('orders');
+  const { data: session, status } = useSession();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (status === 'unauthenticated') {
+      router.push('/login');
+    }
+  }, [status, router]);
+
+  if (status === 'loading' || status === 'unauthenticated') {
+    return (
+      <div className="min-h-[80vh] flex items-center justify-center bg-stone-50">
+        <div className="text-stone-400 font-medium">กำลังโหลดข้อมูล...</div>
+      </div>
+    );
+  }
 
   const tabs = [
     { id: 'orders', name: 'ประวัติการสั่งซื้อ', icon: Package },
@@ -20,7 +38,7 @@ export default function AccountPage() {
         
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-stone-800">บัญชีของฉัน</h1>
-          <p className="text-stone-500 mt-1">ยินดีต้อนรับ, คุณนัชชา</p>
+          <p className="text-stone-500 mt-1">ยินดีต้อนรับ, {session?.user?.name || 'ลูกค้า KNOTS'}</p>
         </div>
 
         <div className="flex flex-col md:flex-row gap-8">
@@ -45,7 +63,10 @@ export default function AccountPage() {
                 })}
               </nav>
               <div className="mt-8 pt-4 border-t border-stone-100">
-                <button className="w-full flex items-center gap-3 px-4 py-3 rounded-xl font-medium text-stone-500 hover:bg-rose-50 hover:text-rose-600 transition-colors text-sm">
+                <button 
+                  onClick={() => signOut({ callbackUrl: '/login' })}
+                  className="w-full flex items-center gap-3 px-4 py-3 rounded-xl font-medium text-stone-500 hover:bg-rose-50 hover:text-rose-600 transition-colors text-sm"
+                >
                   <LogOut size={18} /> ออกจากระบบ
                 </button>
               </div>
@@ -184,16 +205,16 @@ export default function AccountPage() {
                   <div className="grid grid-cols-2 gap-4">
                     <div>
                       <label className="block text-sm font-semibold text-stone-700 mb-1.5">ชื่อจริง</label>
-                      <input type="text" defaultValue="นัชชา" className="w-full border border-stone-300 rounded-xl px-4 py-3 outline-none focus:border-amber-500 bg-stone-50" />
+                      <input type="text" defaultValue={session?.user?.name?.split(' ')[0] || "ชื่อ"} className="w-full border border-stone-300 rounded-xl px-4 py-3 outline-none focus:border-amber-500 bg-stone-50" />
                     </div>
                     <div>
                       <label className="block text-sm font-semibold text-stone-700 mb-1.5">นามสกุล</label>
-                      <input type="text" defaultValue="ใจดี" className="w-full border border-stone-300 rounded-xl px-4 py-3 outline-none focus:border-amber-500 bg-stone-50" />
+                      <input type="text" defaultValue={session?.user?.name?.split(' ')[1] || "นามสกุล"} className="w-full border border-stone-300 rounded-xl px-4 py-3 outline-none focus:border-amber-500 bg-stone-50" />
                     </div>
                   </div>
                   <div>
                     <label className="block text-sm font-semibold text-stone-700 mb-1.5">อีเมล</label>
-                    <input type="email" defaultValue="natcha@example.com" disabled className="w-full border border-stone-200 rounded-xl px-4 py-3 text-stone-500 bg-stone-100 cursor-not-allowed" />
+                    <input type="email" defaultValue={session?.user?.email || ""} disabled className="w-full border border-stone-200 rounded-xl px-4 py-3 text-stone-500 bg-stone-100 cursor-not-allowed" />
                   </div>
                   <div>
                     <label className="block text-sm font-semibold text-stone-700 mb-1.5">เบอร์โทรศัพท์</label>

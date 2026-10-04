@@ -2,12 +2,14 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Search, ShoppingBag, Heart, User, Menu } from 'lucide-react';
+import { Search, ShoppingBag, Heart, User, Menu, LogOut } from 'lucide-react';
 import { useCartStore } from '@/store/cartStore';
+import { useSession, signOut } from 'next-auth/react';
 
 export default function Header() {
   const [mounted, setMounted] = useState(false);
   const totalItems = useCartStore((state) => state.getTotalItems());
+  const { data: session } = useSession(); // ดึงข้อมูล user ที่ล็อกอิน
 
   useEffect(() => {
     setMounted(true);
@@ -48,7 +50,18 @@ export default function Header() {
             />
           </div>
           
-          <Link href="/account" className="hover:text-amber-600 hidden sm:block"><User size={20} /></Link>
+          {session ? (
+            <Link href="/account" className="hover:text-amber-600 hidden sm:block relative group">
+               <div className="flex items-center gap-1">
+                 <div className="w-7 h-7 bg-amber-100 text-amber-700 rounded-full flex items-center justify-center font-bold text-xs">
+                   {session.user?.name?.charAt(0) || 'U'}
+                 </div>
+               </div>
+            </Link>
+          ) : (
+            <Link href="/login" className="hover:text-amber-600 hidden sm:block"><User size={20} /></Link>
+          )}
+
           <Link href="/account?tab=wishlist" className="hover:text-amber-600 hidden sm:block"><Heart size={20} /></Link>
           <Link href="/cart" className="hover:text-amber-600 relative flex items-center">
             <ShoppingBag size={20} />
