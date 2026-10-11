@@ -8,6 +8,8 @@ export interface Product {
   img: string;
   gallery: string[];
   description: string;
+  colors: string[];
+  hooks: string[];
 }
 
 export const products: Product[] = [
@@ -26,6 +28,8 @@ export const products: Product[] = [
       '/images/products/prod-4.jpg',
     ],
     description: 'พวงกุญแจถักลายเดซี่สุดน่ารัก ให้ความรู้สึกสดใส สไตล์มินิมอล แมทช์ง่ายกับทุกกระเป๋า',
+    colors: ['ครีม', 'ชมพู', 'เหลือง'],
+    hooks: ['ตะขอก้ามปู', 'ห่วงกลม'],
   },
   {
     id: 2,
@@ -42,6 +46,8 @@ export const products: Product[] = [
       '/images/products/prod-6.jpg',
     ],
     description: 'ลายถักมินิมอลคลาสสิก เรียบหรูดูดี สัมผัสนุ่มจากเชือกคอตตอนธรรมชาติ 100%',
+    colors: ['ครีม', 'น้ำตาล', 'ดำ'],
+    hooks: ['ตะขอก้ามปู', 'ห่วงกลม'],
   },
   {
     id: 3,
@@ -58,6 +64,8 @@ export const products: Product[] = [
       '/images/products/prod-9.jpg',
     ],
     description: 'เสริมเสน่ห์และความรักด้วยหินโรสควอตซ์แท้ ผสานลายถักแมคราเม่โทนอบอุ่น',
+    colors: ['ชมพู', 'ครีม'],
+    hooks: ['ตะขอก้ามปู', 'ห่วงกลม'],
   },
   {
     id: 4,
@@ -74,6 +82,8 @@ export const products: Product[] = [
       '/images/products/prod-12.jpg',
     ],
     description: 'เซ็ตของขวัญพวงกุญแจโทนเอิร์ธโทน 2 ชิ้น พร้อมกล่องของขวัญและการ์ดอวยพรสุดพิเศษ',
+    colors: ['น้ำตาล', 'ครีม', 'เขียว'],
+    hooks: ['ตะขอก้ามปู', 'ห่วงกลม'],
   },
   {
     id: 5,
@@ -89,6 +99,8 @@ export const products: Product[] = [
       '/images/products/prod-2.jpg',
     ],
     description: 'โทนสีฟ้าน้ำทะเลละมุนตา ดีไซน์โค้งมนเบาสบาย เหมาะสำหรับห้อยกุญแจรถหรือกระเป๋าผ้า',
+    colors: ['ฟ้า', 'ครีม', 'น้ำเงิน'],
+    hooks: ['ตะขอก้ามปู'],
   },
   {
     id: 6,
@@ -105,6 +117,8 @@ export const products: Product[] = [
       '/images/products/prod-8.jpg',
     ],
     description: 'เสริมโชคลาภและความมั่งคั่งด้วยหินหยกแท้ ลายถักเกลียวเสริมความมั่นคง',
+    colors: ['เขียว', 'ครีม'],
+    hooks: ['ตะขอก้ามปู', 'ห่วงกลม'],
   },
   {
     id: 7,
@@ -120,6 +134,8 @@ export const products: Product[] = [
       '/images/products/prod-4.jpg',
     ],
     description: 'พวงกุญแจคู่สำหรับคนพิเศษ สามารถสลักตัวอักษรชื่อย่อของทั้งสองคนได้',
+    colors: ['ดำ', 'ครีม', 'ชมพู'],
+    hooks: ['ตะขอก้ามปู', 'ห่วงกลม'],
   },
   {
     id: 8,
@@ -135,6 +151,8 @@ export const products: Product[] = [
       '/images/products/prod-1.jpg',
     ],
     description: 'สายคล้องมือถักแน่น แข็งแรงทนทาน คล้องข้อมือสะดวก ป้องกันการทำกุญแจหล่น',
+    colors: ['น้ำตาล', 'ดำ', 'ครีม'],
+    hooks: ['ห่วงกลม'],
   },
   {
     id: 9,
@@ -150,6 +168,8 @@ export const products: Product[] = [
       '/images/products/prod-12.jpg',
     ],
     description: 'หินนิลดำปัดเป่าสิ่งไม่ดี เสริมความมั่นใจ สุขุม เรียบเท่ในทุกมุมมอง',
+    colors: ['ดำ', 'เทา'],
+    hooks: ['ตะขอก้ามปู'],
   },
   {
     id: 10,
@@ -165,6 +185,8 @@ export const products: Product[] = [
       '/images/products/prod-1.jpg',
     ],
     description: 'โทนพาสเทลหวานละมุน ลายถักดอกไม้เล็กๆ เพิ่มความน่ารักให้กระเป๋าทุกใบ',
+    colors: ['ชมพู', 'ม่วง', 'ฟ้า', 'ครีม'],
+    hooks: ['ตะขอก้ามปู', 'ห่วงกลม'],
   },
   {
     id: 11,
@@ -180,6 +202,8 @@ export const products: Product[] = [
       '/images/products/prod-3.jpg',
     ],
     description: 'เชือกสีเขียวมะกอกผสมสีครีม สะท้อนธรรมชาติอันเงียบสงบและผ่อนคลาย',
+    colors: ['เขียว', 'ครีม', 'น้ำตาล'],
+    hooks: ['ตะขอก้ามปู', 'ห่วงกลม'],
   },
   {
     id: 12,
@@ -196,5 +220,7 @@ export const products: Product[] = [
       '/images/products/prod-7.jpg',
     ],
     description: 'เซ็ตของขวัญพรีเมียมสีซันเซ็ทโทนส้ม-ครีม มอบความอบอุ่นและประทับใจให้ผู้รับ',
+    colors: ['ส้ม', 'ครีม', 'น้ำตาล'],
+    hooks: ['ตะขอก้ามปู', 'ห่วงกลม'],
   },
 ];
