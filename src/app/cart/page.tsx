@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Trash2, ChevronRight, ArrowLeft, ShieldCheck } from 'lucide-react';
 import { useCartStore } from '@/store/cartStore';
 
@@ -29,13 +30,18 @@ export default function CartPage() {
           <span className="text-stone-800">ตะกร้าสินค้า</span>
         </div>
 
-        <h1 className="text-3xl font-bold text-stone-800 mb-8">ตะกร้าสินค้าของคุณ {cartItems.length > 0 && <span className="text-stone-400 font-medium text-xl">({cartItems.length} รายการ)</span>}</h1>
+        <h1 className="text-3xl font-bold text-stone-800 mb-8">
+          ตะกร้าสินค้าของคุณ {cartItems.length > 0 && <span className="text-stone-400 font-medium text-xl">({cartItems.length} รายการ)</span>}
+        </h1>
 
         {cartItems.length === 0 ? (
-          <div className="bg-white p-16 rounded-3xl shadow-sm text-center border border-stone-100">
-            <h2 className="text-2xl font-semibold text-stone-800 mb-4">ตะกร้าสินค้าว่างเปล่า</h2>
-            <p className="text-stone-500 mb-8">ยังไม่มีสินค้าในตะกร้า ลองดูสินค้าสไตล์มินิมอลของเราไหมคะ?</p>
-            <Link href="/shop" className="bg-stone-900 text-white px-8 py-3.5 rounded-full font-bold hover:bg-stone-800 transition-colors inline-block">
+          <div className="bg-white p-16 rounded-3xl shadow-sm text-center border border-stone-100 max-w-xl mx-auto">
+            <div className="w-20 h-20 bg-stone-100 rounded-full flex items-center justify-center mx-auto mb-6 text-3xl">
+              🧶
+            </div>
+            <h2 className="text-2xl font-bold text-stone-800 mb-3">ยังไม่มีสินค้าในตะกร้า</h2>
+            <p className="text-stone-500 mb-8 text-sm">ลองแวะชมพวงกุญแจถักแมคราเม่คอลเลกชันใหม่ล่าสุดของเราสิคะ</p>
+            <Link href="/shop" className="bg-stone-900 text-white px-8 py-3.5 rounded-full font-bold hover:bg-amber-700 transition-colors inline-block shadow-md">
               ไปช้อปปิ้งกันเลย
             </Link>
           </div>
@@ -56,17 +62,29 @@ export default function CartPage() {
                     <div key={item.id} className="p-6 flex flex-col md:grid md:grid-cols-12 gap-6 items-center">
                       {/* Product details */}
                       <div className="col-span-6 flex gap-4 w-full">
-                        <div className="w-24 h-24 bg-stone-100 rounded-xl flex items-center justify-center flex-shrink-0">
-                          <span className="text-xs text-stone-400">ภาพสินค้า</span>
+                        <div className="w-24 h-24 bg-stone-100 rounded-2xl relative overflow-hidden flex-shrink-0 shadow-sm">
+                          <Image
+                            src={item.img || '/images/products/prod-1.jpg'}
+                            alt={item.name}
+                            fill
+                            className="object-cover"
+                          />
                         </div>
                         <div className="flex flex-col justify-center">
-                          <h3 className="font-bold text-stone-800 text-base md:text-lg mb-1"><Link href={`/product/${item.productId}`} className="hover:text-amber-700">{item.name}</Link></h3>
-                          <p className="text-xs text-stone-500 mb-0.5">สี: {item.color}</p>
-                          <p className="text-xs text-stone-500">ตะขอ: {item.hook}</p>
+                          <h3 className="font-bold text-stone-800 text-base md:text-lg mb-1">
+                            <Link href={`/product/${item.productId}`} className="hover:text-amber-700 transition-colors">
+                              {item.name}
+                            </Link>
+                          </h3>
+                          <p className="text-xs text-stone-500 mb-0.5">สี: <span className="font-medium text-stone-700">{item.color}</span></p>
+                          <p className="text-xs text-stone-500">ตะขอ: <span className="font-medium text-stone-700">{item.hook}</span></p>
+                          
                           {/* Mobile price and remove */}
                           <div className="flex items-center justify-between mt-3 md:hidden">
-                            <span className="font-bold text-stone-900">฿{item.price}</span>
-                            <button onClick={() => removeItem(item.id)} className="text-stone-400 hover:text-rose-500 text-xs flex items-center gap-1"><Trash2 size={14}/> ลบ</button>
+                            <span className="font-bold text-amber-700 text-base">฿{item.price}</span>
+                            <button onClick={() => removeItem(item.id)} className="text-stone-400 hover:text-rose-500 text-xs flex items-center gap-1 font-medium">
+                              <Trash2 size={14}/> ลบ
+                            </button>
                           </div>
                         </div>
                       </div>
@@ -78,12 +96,12 @@ export default function CartPage() {
 
                       {/* Quantity & Desktop Remove */}
                       <div className="col-span-3 flex md:flex-col items-center justify-between md:justify-center gap-3 w-full md:w-auto">
-                        <div className="flex items-center border border-stone-200 rounded-lg bg-stone-50">
-                          <button onClick={() => updateQty(item.id, item.qty - 1)} className="px-3 py-1.5 text-stone-600 hover:bg-stone-200 rounded-l-lg transition-colors">-</button>
+                        <div className="flex items-center border border-stone-200 rounded-xl bg-stone-50 shadow-sm">
+                          <button onClick={() => updateQty(item.id, item.qty - 1)} className="px-3 py-1.5 text-stone-600 hover:bg-stone-200 rounded-l-xl transition-colors font-bold">-</button>
                           <span className="w-8 text-center text-sm font-bold text-stone-800">{item.qty}</span>
-                          <button onClick={() => updateQty(item.id, item.qty + 1)} className="px-3 py-1.5 text-stone-600 hover:bg-stone-200 rounded-r-lg transition-colors">+</button>
+                          <button onClick={() => updateQty(item.id, item.qty + 1)} className="px-3 py-1.5 text-stone-600 hover:bg-stone-200 rounded-r-xl transition-colors font-bold">+</button>
                         </div>
-                        <button onClick={() => removeItem(item.id)} className="hidden md:flex text-stone-400 hover:text-rose-500 text-xs items-center gap-1 transition-colors">
+                        <button onClick={() => removeItem(item.id)} className="hidden md:flex text-stone-400 hover:text-rose-500 text-xs items-center gap-1 transition-colors font-medium">
                           <Trash2 size={14}/> ลบออก
                         </button>
                       </div>
@@ -92,7 +110,7 @@ export default function CartPage() {
                 </div>
               </div>
               <div className="mt-6">
-                <Link href="/shop" className="text-amber-600 font-semibold hover:text-amber-700 flex items-center gap-2 text-sm transition-colors">
+                <Link href="/shop" className="text-amber-700 font-bold hover:text-amber-800 flex items-center gap-2 text-sm transition-colors">
                   <ArrowLeft size={16} /> ซื้อสินค้าเพิ่มเติม
                 </Link>
               </div>
@@ -121,7 +139,7 @@ export default function CartPage() {
                 <div className="flex justify-between items-end mb-8">
                   <span className="font-bold text-stone-800 text-lg">ยอดรวมสุทธิ</span>
                   <div className="text-right">
-                    <span className="font-bold text-stone-900 text-3xl">฿{subtotal}</span>
+                    <span className="font-bold text-amber-700 text-3xl">฿{subtotal}</span>
                   </div>
                 </div>
 
